@@ -33,49 +33,55 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Expanded mainBody() {
-    return Expanded(
-      child: ListView.separated(
-        separatorBuilder: (context, index) =>
-            Divider(thickness: 2, color: Theme.of(context).primaryColor),
-        itemCount: waterTrackerList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.blue[100],
-              foregroundColor: Colors.black,
-              child: Text('${index + 1}'),
+  Widget mainBody() {
+    return waterTrackerList.isEmpty
+        ? const Expanded(
+          child: Center(
+              child: Text("Add something to get started."),
             ),
-            title: Text(
-              '${waterTrackerList[index].noOfGlass} glass of water',
-            ),
-            titleTextStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
-            ),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(DateFormat('jm').format(dateTime)),
-                Text(DateFormat('yMd').format(dateTime)),
-              ],
-            ),
-            trailing: CircleAvatar(
-              backgroundColor: Colors.red[100],
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    waterTrackerList.removeAt(index);
-                  });
-                },
-                icon: const Icon(Icons.delete, color: Colors.red),
-              ),
+        )
+        : Expanded(
+            child: ListView.separated(
+              separatorBuilder: (context, index) =>
+                  Divider(thickness: 2, color: Theme.of(context).primaryColor),
+              itemCount: waterTrackerList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.blue[100],
+                    foregroundColor: Colors.black,
+                    child: Text('${index + 1}'),
+                  ),
+                  title: Text(
+                    '${waterTrackerList[index].noOfGlass} glass of water',
+                  ),
+                  titleTextStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(DateFormat('jm').format(dateTime)),
+                      Text(DateFormat('yMd').format(dateTime)),
+                    ],
+                  ),
+                  trailing: CircleAvatar(
+                    backgroundColor: Colors.red[100],
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          waterTrackerList.removeAt(index);
+                        });
+                      },
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                    ),
+                  ),
+                );
+              },
             ),
           );
-        },
-      ),
-    );
   }
 
   AppBar appBar(BuildContext context) {
@@ -158,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.blue[100],
             foregroundColor: Colors.black,
             radius: 25,
-            child: const Icon(Icons.add,size: 28),
+            child: const Icon(Icons.add, size: 28),
           ),
         ),
       ],
